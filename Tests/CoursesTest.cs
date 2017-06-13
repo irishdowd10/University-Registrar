@@ -29,8 +29,8 @@ namespace Registrar
     public void Equals_ChecksObjectEquality_True()
     {
       //Arrange, Act
-      Course firstCourse = new Course("John", "H1Z1");
-      Course secondCourse = new Course("John", "H1Z1");
+      Course firstCourse = new Course("Standard Math", "Mat101");
+      Course secondCourse = new Course("Standard Math", "Mat101");
       //Assert
       Assert.Equal(firstCourse, secondCourse);
     }
@@ -39,7 +39,7 @@ namespace Registrar
     public void Save_DoesSaveToDatabase_True()
     {
       //Arrange
-      Course testCourse = new Course("John", "H1Z1");
+      Course testCourse = new Course("Standard Math", "Mat101");
       testCourse.Save();
       //Act
       List<Course> result = Course.GetAll();
@@ -51,7 +51,7 @@ namespace Registrar
     [Fact]
     public void Find_FindsCourseInDatabase_True()
     {
-      Course testCourse = new Course("John", "H1Z1");
+      Course testCourse = new Course("Standard Math", "Mat101");
       testCourse.Save();
 
       Course foundCourse = Course.Find(testCourse.GetId());
@@ -59,6 +59,31 @@ namespace Registrar
       Assert.Equal(testCourse, foundCourse);
     }
 
+    public void AddStudent_AddStudentToCourse_True()
+    {
+      //Arrange
+      Course testCourse = new Course("Standard Math", "Mat101");
+      testCourse.Save();
+
+      Student firstStudent = new Student("John", new DateTime(2017, 06, 13));
+      Student secondStudent = new Student("Jordan", new DateTime(2017, 06, 13));
+      //Add
+      testCourse.AddStudent(firstStudent);
+      testCourse.AddStudent(secondStudent);
+
+      List<Student> result = testCourse.GetStudents();
+      List<Student> testList = new List<Student>{firstStudent, secondStudent};
+      //Assert
+      Assert.Equal(testList, result);
+
+    }
+
+
+    // [Fact]
+    // public void GetStudent_ReturnsAllStudentsWithThisCourse_True()
+    // {
+    //
+    // }
 
 
     public void Dispose()

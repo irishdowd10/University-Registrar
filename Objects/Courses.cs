@@ -169,7 +169,31 @@ namespace Registrar
       return foundCourse;
       }
 
+//AddStudent
+    public void AddStudent(Student newStudent)
+    {
+      SqlConnection conn = DB.Connection();
+      conn.Open();
 
+      SqlCommand cmd = new SqlCommand("INSERT INTO courses_students (course_id, student_id) VALUSE (@CourseId, @StudentId);", conn);
+
+      SqlParameter CourseIdParameter = new SqlParameter();
+      CourseIdParameter.ParameterName = "@CourseId";
+      CourseIdParameter.Value = this.GetId();
+      cmd.Parameters.Add(CourseIdParameter);
+
+      SqlParameter StudentIdParameter = new SqlParameter();
+      StudentIdParameter.ParameterName = "@StudentId";
+      StudentIdParameter.Value = this.GetId();
+      cmd.Parameters.Add(StudentIdParameter);
+
+      cmd.ExecuteNonQuery();
+
+      if(conn != null)
+      {
+        conn.Close();
+      }
+    }
 
 
 //DeleteAll
