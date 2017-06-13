@@ -12,9 +12,9 @@ namespace Registrar
 
   public Student(string Name, DateTime Enrollment, int Id = 0)
   {
-    _id = Id;
     _name = Name;
     _enrollment = Enrollment;
+    _id = Id;
   }
 
   public override bool Equals(System.Object otherStudent)
