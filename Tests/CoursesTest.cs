@@ -71,8 +71,8 @@ namespace Registrar
       firstStudent.Save();
       secondStudent.Save();
       //Add
-      testCourse.AddStudent(secondStudent);
       testCourse.AddStudent(firstStudent);
+      testCourse.AddStudent(secondStudent);
 
       List<Student> result = testCourse.GetStudents();
       List<Student> testList = new List<Student> {firstStudent, secondStudent};
@@ -100,16 +100,17 @@ namespace Registrar
       Assert.Equal(testList, savedStudents);
     }
 
-    // [Fact]
-    // public void GetStudent_ReturnsAllStudentsWithThisCourse_True()
-    // {
-    //
-    // }
+    [Fact]
+    public void GetStudent_ReturnsAllStudentsWithThisCourse_True()
+    {
+
+    }
 
 
     public void Dispose()
     {
       Course.DeleteAll();
+      Student.DeleteAll();
     }
 
   }

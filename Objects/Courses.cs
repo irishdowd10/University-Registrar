@@ -169,7 +169,7 @@ namespace Registrar
       return foundCourse;
       }
 
-//AddStudent
+// AddStudent
     public void AddStudent(Student newStudent)
     {
       SqlConnection conn = DB.Connection();
