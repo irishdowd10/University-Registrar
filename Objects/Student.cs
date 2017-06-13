@@ -96,6 +96,46 @@ namespace Registrar
     }
 
 
+
+    public void Save()
+    {
+      SqlConnection conn = DB.Connection();
+      conn.Open();
+
+      SqlCommand cmd = new SqlCommand("INSERT INTO students (name, enrollment_date) OUTPUT INSERTED.id VALUES (@StudentName, @EnrollmentDate);", conn);
+
+      SqlParameter nameParameter = new SqlParameter();
+      nameParameter.ParameterName = "@StudentName";
+      nameParameter.Value = this.GetName();
+
+      SqlParameter enrollmentParameter = new SqlParameter();
+      enrollmentParameter.ParameterName = "@EnrollmentDate";
+      enrollmentParameter.Value = this.GetEnrollmentDate();
+
+      cmd.Parameters.Add(enrollmentParameter);
+      cmd.Parameters.Add(nameParameter);
+
+      SqlDataReader rdr = cmd.ExecuteReader();
+
+      while(rdr.Read())
+      {
+
+        this._id = rdr.GetInt32(0);
+      }
+      if(rdr != null)
+      {
+        rdr.Close();
+      }
+      if(conn != null)
+      {
+        conn.Close();
+      }
+    }
+
+
+
+
+
 //DeleteAll
   public static void DeleteAll()
   {

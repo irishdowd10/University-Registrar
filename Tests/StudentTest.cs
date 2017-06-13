@@ -24,10 +24,6 @@ namespace Registrar
       Assert.Equal(0, result);
     }
 
-    public void Dispose()
-    {
-      Student.DeleteAll();
-    }
 
     [Fact]
     public void Equals_ChecksObjectEquality_True()
@@ -52,6 +48,10 @@ namespace Registrar
       Assert.Equal(testList, result);
     }
 
+    public void Dispose()
+    {
+      Student.DeleteAll();
+    }
 
   }
 }
