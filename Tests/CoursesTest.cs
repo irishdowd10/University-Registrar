@@ -78,9 +78,27 @@ namespace Registrar
       List<Student> testList = new List<Student> {firstStudent, secondStudent};
       //Assert
       Assert.Equal(testList, result);
-
     }
 
+
+    [Fact]
+    public void GetStudents_ReturnAllCoursesStudents_True()
+    {
+      //Arrange
+      Course testCourse = new Course("Standard Math", "Math101");
+      testCourse.Save();
+
+      Student testStudent1 = new Student("John", new DateTime(2017, 06, 13));
+      Student testStudent2 = new Student("Jordan", new DateTime(2017, 06, 13));
+      testStudent1.Save();
+      testStudent2.Save();
+      //Act
+      testCourse.AddStudent(testStudent1);
+      List<Student> savedStudents = testCourse.GetStudents();
+      List<Student> testList = new List<Student>{testStudent1};
+      //Assert
+      Assert.Equal(testList, savedStudents);
+    }
 
     // [Fact]
     // public void GetStudent_ReturnsAllStudentsWithThisCourse_True()
