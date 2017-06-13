@@ -32,12 +32,26 @@ namespace Registrar
     [Fact]
     public void Equals_ChecksObjectEquality_True()
     {
-      //Arrange, application
+      //Arrange, Act
       Student firstStudent = new Student("John", new DateTime(2017, 06, 13));
       Student secondStudent = new Student("John", new DateTime(2017, 06, 13));
       //Assert
       Assert.Equal(firstStudent, secondStudent);
     }
+
+    [Fact]
+    public void Save_DoesSaveToDatabase_True()
+    {
+      //Arrange
+      Student testStudent = new Student("John", new DateTime(2017, 06, 13));
+      testStudent.Save();
+      //Act
+      List<Student> result = Student.GetAll();
+      List<Student> testList = new List<Student>{testStudent};
+      //Assert
+      Assert.Equal(testList, result);
+    }
+
 
   }
 }
