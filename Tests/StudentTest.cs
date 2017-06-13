@@ -48,6 +48,19 @@ namespace Registrar
       Assert.Equal(testList, result);
     }
 
+    [Fact]
+    public void Find_FindsStudentInDatabase_True()
+    {
+      Student testStudent = new Student("John", new DateTime(2017, 06, 13));
+      testStudent.Save();
+
+      Student foundStudent = Student.Find(testStudent.GetId());
+
+      Assert.Equal(testStudent, foundStudent);
+    }
+
+
+
     public void Dispose()
     {
       Student.DeleteAll();
