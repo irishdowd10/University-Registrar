@@ -175,7 +175,7 @@ namespace Registrar
       SqlConnection conn = DB.Connection();
       conn.Open();
 
-      SqlCommand cmd = new SqlCommand("INSERT INTO courses_students (course_id, student_id) VALUSE (@CourseId, @StudentId);", conn);
+      SqlCommand cmd = new SqlCommand("INSERT INTO courses_students (course_id, student_id) VALUES (@CourseId, @StudentId);", conn);
 
       SqlParameter CourseIdParameter = new SqlParameter();
       CourseIdParameter.ParameterName = "@CourseId";
@@ -184,7 +184,7 @@ namespace Registrar
 
       SqlParameter StudentIdParameter = new SqlParameter();
       StudentIdParameter.ParameterName = "@StudentId";
-      StudentIdParameter.Value = this.GetId();
+      StudentIdParameter.Value = newStudent.GetId();
       cmd.Parameters.Add(StudentIdParameter);
 
       cmd.ExecuteNonQuery();
@@ -193,6 +193,45 @@ namespace Registrar
       {
         conn.Close();
       }
+    }
+
+
+    public List<Student> GetStudents()
+    {
+      SqlConnection conn = DB.Connection();
+      conn.Open();
+
+      SqlCommand cmd = new SqlCommand("SELECT students.* FROM courses JOIN courses_students ON (courses.id = courses_students.course_id) JOIN students ON (courses_students.student_id = students.id) WHERE courses.id = @CourseId;", conn);
+
+      SqlParameter CourseIdParameter = new SqlParameter();
+      CourseIdParameter.ParameterName = "@CourseId";
+      CourseIdParameter.Value = this.GetId();
+
+      cmd.Parameters.Add(CourseIdParameter);
+
+      SqlDataReader rdr = cmd.ExecuteReader();
+
+      List<Student> students = new List<Student>{};
+
+      while(rdr.Read())
+      {
+        int studentId = rdr.GetInt32(0);
+        string studentName = rdr.GetString(1);
+        DateTime studentEnrollment = rdr.GetDateTime(2);
+
+        Student newStudent = new Student(studentName, studentEnrollment, studentId);
+        students.Add(newStudent);
+      }
+
+      if(rdr != null)
+      {
+        rdr.Close();
+      }
+      if(conn != null)
+      {
+        conn.Close();
+      }
+      return students;
     }
 
 

@@ -63,6 +63,7 @@ namespace Registrar
 
     public void Dispose()
     {
+
       Student.DeleteAll();
     }
 

@@ -59,6 +59,7 @@ namespace Registrar
       Assert.Equal(testCourse, foundCourse);
     }
 
+    [Fact]
     public void AddStudent_AddStudentToCourse_True()
     {
       //Arrange
@@ -67,12 +68,14 @@ namespace Registrar
 
       Student firstStudent = new Student("John", new DateTime(2017, 06, 13));
       Student secondStudent = new Student("Jordan", new DateTime(2017, 06, 13));
+      firstStudent.Save();
+      secondStudent.Save();
       //Add
-      testCourse.AddStudent(firstStudent);
       testCourse.AddStudent(secondStudent);
+      testCourse.AddStudent(firstStudent);
 
       List<Student> result = testCourse.GetStudents();
-      List<Student> testList = new List<Student>{firstStudent, secondStudent};
+      List<Student> testList = new List<Student> {firstStudent, secondStudent};
       //Assert
       Assert.Equal(testList, result);
 
