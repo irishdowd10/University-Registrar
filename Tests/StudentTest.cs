@@ -29,6 +29,15 @@ namespace Registrar
       Student.DeleteAll();
     }
 
+    [Fact]
+    public void Equals_ChecksObjectEquality_True()
+    {
+      //Arrange, application
+      Student firstStudent = new Student("John", new DateTime(2017, 06, 13));
+      Student secondStudent = new Student("John", new DateTime(2017, 06, 13));
+      //Assert
+      Assert.Equal(firstStudent, secondStudent);
+    }
 
   }
 }
