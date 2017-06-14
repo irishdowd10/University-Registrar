@@ -6,7 +6,7 @@
   <Ol>
     @foreach (var student in Model)
     {
-      <li><a href='/students/@student.GetId()'>Id: @student.GetId()Name: @student.GetName()Enrollment Date: @student.GetEnrollmentDate()</a></li>
+      <li><a href='/students/@student.GetId()'><p>Id: @student.GetId()</p><p>Name: @student.GetName()</p><p>Enrollment Date: @student.GetEnrollmentDate()</p></a> | <a href="/student/edit/@student.GetId()">Edit</a> | <a href="/student/delete/@student.GetId()">Delete</a></li>
     }
 
   </Ol>

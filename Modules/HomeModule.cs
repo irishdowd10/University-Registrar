@@ -70,6 +70,15 @@ namespace Registrar
       SelectedCourse.Delete();
       return View["success.cshtml"];
     };
+    Get["student/delete/{id}"] = parameters => {
+     Student SelectedStudent = Student.Find(parameters.id);
+     return View["student_delete.cshtml", SelectedStudent];
+   };
+   Delete["student/delete/{id}"] = parameters => {
+     Student SelectedStudent = Student.Find(parameters.id);
+     SelectedStudent.Delete();
+     return View["success.cshtml"];
+   };
 
     Post["student/add_course"] = _ => {
       Course course = Course.Find(Request.Form["course-id"]);
