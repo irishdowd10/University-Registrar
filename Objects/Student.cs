@@ -235,6 +235,25 @@ namespace Registrar
       return courses;
     }
 
+  //Delete Student
+      public void Delete()
+        {
+        SqlConnection conn = DB.Connection();
+        conn.Open();
+
+        SqlCommand cmd = new SqlCommand("DELETE FROM students WHERE id = @StudentId; DELETE FROM courses_students WHERE student_id = @StudentId;", conn);
+        SqlParameter studentIdParameter = new SqlParameter();
+        studentIdParameter.ParameterName = "@StudentId";
+        studentIdParameter.Value = this.GetId();
+
+        cmd.Parameters.Add(studentIdParameter);
+        cmd.ExecuteNonQuery();
+
+        if (conn != null)
+        {
+          conn.Close();
+        }
+      }
 
 
 //DeleteAll
@@ -246,13 +265,6 @@ namespace Registrar
       cmd.ExecuteNonQuery();
       conn.Close();
     }
-
-
-
-
-
-
-
 
 
 

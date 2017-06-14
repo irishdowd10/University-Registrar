@@ -80,7 +80,6 @@ namespace Registrar
       Assert.Equal(testList, result);
     }
 
-
     [Fact]
     public void GetStudents_ReturnAllCoursesStudents_True()
     {
@@ -101,11 +100,26 @@ namespace Registrar
     }
 
     [Fact]
-    public void GetStudent_ReturnsAllStudentsWithThisCourse_True()
+    public void Delete_DeletesCourseAssociationsFromDatabase_CourseList()
     {
+      //Arrange
+      Student testStudent = new Student("John", new DateTime (2017, 06, 13));
+      testStudent.Save();
 
+      Course testCourse = new Course("American History","HST201");
+      testCourse.Delete();
+
+
+      //Act
+      testCourse.AddStudent(testStudent);
+      testCourse.Delete();
+
+      List<Course> result = testStudent.GetCourses();
+      List<Course> test = new List<Course> {};
+
+      //Assert
+      Assert.Equal(test, result);
     }
-
 
     public void Dispose()
     {

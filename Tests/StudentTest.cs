@@ -101,6 +101,28 @@ namespace Registrar
       Assert.Equal(testList, savedCourses);
     }
 
+    [Fact]
+    public void Delete_DeletesStudentAssociationsFromDatabase_StudentList()
+    {
+      //Arrange
+      Course testCourse = new Course("American History","HST201");
+      testCourse.Delete();
+
+      Student testStudent = new Student("John", new DateTime (2017, 06, 13));
+      testStudent.Save();
+
+
+      //Act
+      testStudent.AddCourse(testCourse);
+      testStudent.Delete();
+
+      List<Student> result = testCourse.GetStudents();
+      List<Student> test = new List<Student> {};
+
+      //Assert
+      Assert.Equal(test, result);
+    }
+
 
 
     public void Dispose()
