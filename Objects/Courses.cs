@@ -97,7 +97,6 @@ namespace Registrar
     }
 
 
-
     public void Save()
     {
       SqlConnection conn = DB.Connection();
@@ -195,7 +194,6 @@ namespace Registrar
       }
     }
 
-
     public List<Student> GetStudents()
     {
       SqlConnection conn = DB.Connection();
@@ -254,6 +252,49 @@ namespace Registrar
         }
       }
 
+  //Updates a Course
+      public void Edit(string newName, string NewCourseNumber)
+       {
+         SqlConnection conn = DB.Connection();
+         conn.Open();
+
+         SqlCommand cmd = new SqlCommand("UPDATE courses SET name = @NewName, course_number = @NewCourseNumber OUTPUT INSERTED.name, INSERTED.course_number WHERE id = @CourseId;", conn);
+
+         SqlParameter newNameParameter = new SqlParameter();
+         newNameParameter.ParameterName = "@NewName";
+         newNameParameter.Value = newName;
+         cmd.Parameters.Add(newNameParameter);
+
+         SqlParameter NewCourseNumberParameter = new SqlParameter();
+         NewCourseNumberParameter.ParameterName = "@NewCourseNumber";
+         NewCourseNumberParameter.Value = NewCourseNumber;
+         cmd.Parameters.Add(NewCourseNumberParameter);
+
+         SqlParameter courseIdParameter = new SqlParameter();
+         courseIdParameter.ParameterName = "@CourseId";
+         courseIdParameter.Value = this.GetId();
+         cmd.Parameters.Add(courseIdParameter);
+         SqlDataReader rdr = cmd.ExecuteReader();
+
+         while(rdr.Read())
+         {
+          //  this._id =rdr.GetInt32(0);
+           this._name = rdr.GetString(0);
+           this._courseNumber=rdr.GetString(1);
+
+         }
+
+         if (rdr != null)
+         {
+           rdr.Close();
+         }
+
+         if (conn != null)
+         {
+           conn.Close();
+         }
+        }
+
 
 //DeleteAll
     public static void DeleteAll()
@@ -264,10 +305,6 @@ namespace Registrar
       cmd.ExecuteNonQuery();
       conn.Close();
     }
-
-
-
-
 
 
 

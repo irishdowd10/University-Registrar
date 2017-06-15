@@ -1,5 +1,6 @@
-
-<h1>Registrar</h1>
+@{
+  Layout ="shared/_Layout.cshtml";
+}
 <h2>Student: @Model["student"].GetName()</h2>
 <hr />
 @if (@Model["studentCourses"].Count != 0)
@@ -12,6 +13,13 @@
     }
   </ul>
 }
+
+@if(@Model["allCourses"].Count <=0)
+{
+<p> there no course available, please add one </p>
+}
+else
+{
 <h4>Add a course to this student:</h4>
 <form action='/student/add_course' method='post'>
   <input id='student-id' name='student-id' type='hidden' value='@Model["student"].GetId()'>
@@ -24,4 +32,6 @@
   </select>
   <button type='submit'>Add</button>
 </form>
+}
+
 <p><a href="/">Return to Main Page</a></p>

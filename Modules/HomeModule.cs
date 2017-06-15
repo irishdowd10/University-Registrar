@@ -41,17 +41,17 @@ namespace Registrar
         Student.DeleteAll();
         return View["cleared.cshtml"];
       };
-      Get["courses/{id}"] = parameters => {
-        Dictionary<string, object> model = new Dictionary<string, object>();
-        Course SelectedCourse = Course.Find(parameters.id);
-        List<Student> CourseStudents = SelectedCourse.GetStudents();
-        List<Student> AllStudents = Student.GetAll();
-        model.Add("course", SelectedCourse);
-        model.Add("courseStudents", CourseStudents);
-        model.Add("allStudents", AllStudents);
-        return View["course.cshtml", model];
+    Get["courses/{id}"] = parameters => {
+      Dictionary<string, object> model = new Dictionary<string, object>();
+      Course SelectedCourse = Course.Find(parameters.id);
+      List<Student> CourseStudents = SelectedCourse.GetStudents();
+      List<Student> AllStudents = Student.GetAll();
+      model.Add("course", SelectedCourse);
+      model.Add("courseStudents", CourseStudents);
+      model.Add("allStudents", AllStudents);
+      return View["course.cshtml", model];
      };
-     Get["students/{id}"] = parameters => {
+    Get["students/{id}"] = parameters => {
        Dictionary<string, object> model = new Dictionary<string, object>();
        Student SelectedStudent = Student.Find(parameters.id);
        List<Course> StudentCourses = SelectedStudent.GetCourses();
@@ -61,37 +61,56 @@ namespace Registrar
        model.Add("allCourses", AllCourses);
        return View["student.cshtml", model];
      };
-     Get["course/delete/{id}"] = parameters => {
-      Course SelectedCourse = Course.Find(parameters.id);
-      return View["course_delete.cshtml", SelectedCourse];
+    Get["course/delete/{id}"] = parameters => {
+       Course SelectedCourse = Course.Find(parameters.id);
+       return View["course_delete.cshtml", SelectedCourse];
     };
     Delete["course/delete/{id}"] = parameters => {
-      Course SelectedCourse = Course.Find(parameters.id);
-      SelectedCourse.Delete();
-      return View["success.cshtml"];
+       Course SelectedCourse = Course.Find(parameters.id);
+       SelectedCourse.Delete();
+       return View["success.cshtml"];
     };
     Get["student/delete/{id}"] = parameters => {
-     Student SelectedStudent = Student.Find(parameters.id);
-     return View["student_delete.cshtml", SelectedStudent];
-   };
-   Delete["student/delete/{id}"] = parameters => {
+       Student SelectedStudent = Student.Find(parameters.id);
+      return View["student_delete.cshtml", SelectedStudent];
+    };
+    Delete["student/delete/{id}"] = parameters => {
      Student SelectedStudent = Student.Find(parameters.id);
      SelectedStudent.Delete();
      return View["success.cshtml"];
-   };
-
+    };
     Post["student/add_course"] = _ => {
       Course course = Course.Find(Request.Form["course-id"]);
       Student student = Student.Find(Request.Form["student-id"]);
       student.AddCourse(course);
       return View["success.cshtml"];
-      };
+    };
     Post["course/add_student"] = _ => {
       Course course = Course.Find(Request.Form["course-id"]);
       Student student = Student.Find(Request.Form["student-id"]);
       course.AddStudent(student);
       return View["success.cshtml"];
       };
+    Get["course/edit/{id}"] = parameters => {
+        Course SelectedCourse = Course.Find(parameters.id);
+        return View["course_edit.cshtml", SelectedCourse];
+      };
+
+    Patch["course/edit/{id}"] = parameters => {
+      Course SelectedCourse = Course.Find(parameters.id);
+      SelectedCourse.Edit(Request.Form["course-name"],Request.Form["course-number"]);
+      return View["success.cshtml"];
+      };
+    Get["student/edit/{id}"] = parameters => {
+      Student SelectedStudent = Student.Find(parameters.id);
+      return View["student_edit.cshtml", SelectedStudent];
+        };
+
+    Patch["student/edit/{id}"] = parameters => {
+      Student SelectedStudent = Student.Find(parameters.id);
+      SelectedStudent.Edit(Request.Form["student-name"]);
+      return View["success.cshtml"];
+        };
     }
   }
 }

@@ -14,6 +14,8 @@ namespace Registrar
       DBConfiguration.ConnectionString = "Data Source=(localdb)\\mssqllocaldb;Initial Catalog=registrar_test;Integrated Security=SSPI;";
     }
 
+     public DateTime testDate = new DateTime(2017, 1, 1);
+
     [Fact]
     public void GetAll_GetsCountOfStudents_DatabaseEmpty()
     {
@@ -122,7 +124,21 @@ namespace Registrar
       //Assert
       Assert.Equal(test, result);
     }
-
+    //
+    // [Fact]
+    // public void Edit_EditsesStudentInDatabase()
+    // {
+    //   //Arrange
+    //   Student newStudent = new Student("John");
+    //   newStudent.Save();
+    //   newStudent.Edit("Jim");
+    //
+    //  //Act
+    //  Student newerStudent = new Student("Jim");
+    //
+    //
+    //  Assert.Equal(newStudent,newerStudent);
+    // }
 
 
     public void Dispose()

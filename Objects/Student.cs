@@ -255,6 +255,49 @@ namespace Registrar
         }
       }
 
+      //Edit Student
+      public void Edit(string newName)
+       {
+         SqlConnection conn = DB.Connection();
+         conn.Open();
+
+         SqlCommand cmd = new SqlCommand("UPDATE students SET name = @NewName  WHERE id = @StudentId;", conn);
+
+         SqlParameter newNameParameter = new SqlParameter();
+         newNameParameter.ParameterName = "@NewName";
+         newNameParameter.Value = newName;
+         cmd.Parameters.Add(newNameParameter);
+
+        //  SqlParameter NewEnrollmentParameter = new SqlParameter();
+        //  NewEnrollmentParameter.ParameterName = "@NewEnrollment";
+        //  NewEnrollmentParameter.Value = NewEnrollment;
+        //  cmd.Parameters.Add(NewEnrollmentParameter);
+
+         SqlParameter studentIdParameter = new SqlParameter();
+         studentIdParameter.ParameterName = "@StudentId";
+         studentIdParameter.Value = this.GetId();
+         cmd.Parameters.Add(studentIdParameter);
+         SqlDataReader rdr = cmd.ExecuteReader();
+
+         while(rdr.Read())
+         {
+          //  this._id =rdr.GetInt32(0);
+           this._name = rdr.GetString(0);
+          //  this._enrollment =rdr.GetDateTime(1);
+
+         }
+
+         if (rdr != null)
+         {
+           rdr.Close();
+         }
+
+         if (conn != null)
+         {
+           conn.Close();
+         }
+      }
+
 
 //DeleteAll
     public static void DeleteAll()

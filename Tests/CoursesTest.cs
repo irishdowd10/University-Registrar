@@ -121,6 +121,22 @@ namespace Registrar
       Assert.Equal(test, result);
     }
 
+    [Fact]
+    public void Edit_EditsesCourseInDatabase()
+    {
+      //Arrange
+      Course newCourse = new Course("History", "HST201");
+      newCourse.Save();
+      newCourse.Edit("American", "HST301");
+
+     //Act
+     Course newerCourse = new Course("American", "HST201");
+
+
+
+     Assert.Equal(newCourse,newerCourse);
+    }
+
     public void Dispose()
     {
       Course.DeleteAll();

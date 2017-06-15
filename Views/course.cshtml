@@ -1,5 +1,7 @@
 
-<h1>Registrar</h1>
+@{
+  Layout ="shared/_Layout.cshtml";
+}
 <h2>Course: @Model["course"].GetName()</h2>
 <hr />
 @if (@Model["courseStudents"].Count != 0)

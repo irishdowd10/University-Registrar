@@ -1,0 +1,12 @@
+@{
+  Layout ="shared/_Layout.cshtml";
+}
+<h2>Edit student: @Model.GetName()</h2>
+<form action="/student/edit/@Model.GetId()" method="post">
+  <input type="hidden" name="_method" value="PATCH">
+  <input name="student-id" type="hidden" value="@Model.GetId()">
+  <label for="student-name">Student name</label>
+  <input id="student-name" name="student-name" type="text" required>
+  <button type="submit">Submit</button>
+</form>
+<h4><a href="/">Return home</a></h4>
